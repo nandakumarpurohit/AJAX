@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	
+	var xmlHttpRequest;
+	function initialize() {
+		if (window.XMLHttpRequest) {
+			xmlHttpRequest = new XMLHttpRequest();
+		} else {
+		    // code for IE6, IE5
+		    xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		return xmlHttpRequest;
+	}
+	
+
+	function process() {
+		var AJAX = initialize();
+		var data = document.getElementById("name").value;
+		AJAX.open("GET", "temp.jsp?username=" + data, true);
+		AJAX.send();
+		AJAX.onreadystatechange = displayMessage;
+		
+		function displayMessage() {
+			if(AJAX.readyState == 4 && AJAX.status == 200) {
+				console.log(AJAX.responseText);
+				document.getElementById("output").innerHTML = AJAX.responseText;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<input type="text" id="name" />
+<button onClick="process()">Click</button>
+
+<div id="output">
+Your output comes here...
+</div>
+
+</body>
+</html>
